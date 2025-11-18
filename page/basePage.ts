@@ -1,8 +1,8 @@
-import { Locators, Page } from "@playwright/test";
+import { Locator, Page, test, expect } from "@playwright/test";
 
 export abstract class BasePage {
   readonly page: Page;
-  readonly title: Locators;
+  readonly title: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -15,5 +15,13 @@ export abstract class BasePage {
 
   async sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async verifyURLContains(expectedURL: string): Promise<void> {
+    const stepName: string = `Verify URL contains ${expectedURL}`;
+    await test.step(stepName, async () => {
+        console.debug(stepName);
+        await expect(await this.page, `Page URL should contain`).toHaveURL(expectedURL);
+   });
   }
 }
