@@ -13,7 +13,7 @@ const test = baseTest.extend({
     // after each test cleanup can go here
 
   },
-  
+
   baseURL: async ({}, use) => {
     await use(BASE_URL);
   }
